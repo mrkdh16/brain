@@ -30,14 +30,14 @@ const config: QuartzConfig = {
       },
       colors: {
         lightMode: {
-          light: "#FFFFFF",      // Page background
+          light: "#FFFBDE",      // Page background
           lightgray: "#e5e5e5",   // Borders
           gray: "#b8b8b8",       // Secondary text (e.g., dates)
           darkgray: "#000000",   // Body text
           dark: "#000000",       // Headings
           secondary: "#17a2b8",   // Link color from your personal site
           tertiary: "#f09228",    // Link hover color from your personal site
-          highlight: "#FFFFFF", // A more subtle highlight
+          highlight: "#FFFBDE", // A more subtle highlight
           textHighlight: "#f0922855", 
         },
         darkMode: {
