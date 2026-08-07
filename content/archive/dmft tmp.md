@@ -178,3 +178,22 @@ $$f(x;\theta)=0\ \text{at init (centered)}$$ $$\tilde f(x;\theta)=\alpha f(x;\th
 $$\frac{1}{\gamma\sqrt N}f(x;\theta),\qquad \eta N\ \text{lr}$$
 
 A couple of notes: on page 51 there's a cluster of disconnected side-scratch computations (matrix exponential product checks, a feedforward net formula) that were faint/ambiguous in the handwriting — I flagged those inline rather than guess. If you want me to take another pass at zooming into any specific spot, let me know which page/region.
+
+Completing the statement:
+
+$$ (u_0(t_1),\dots,u_0(t_n)) \sim \mathcal{N}\big(0,\ \Sigma\big), \qquad \Sigma_{ij} = C(t_i,t_j), $$
+
+where the covariance kernel is
+
+$$ C(t,s) ;=; \mathbb{E}\big[u_0(t),u_0(s)\big] ;=; \frac{1}{N},h(t)^\top \mathbb{E}\big[a_0 a_0^\top\big], h(s) ;\xrightarrow[N\to\infty]{}; \lim_{N\to\infty}\frac{1}{N}\sum_{k=1}^N h_k(t),h_k(s). $$
+
+**Why this is the right form:**
+
+- $u_0(t) = -\frac{1}{\sqrt N} a_0^\top h(t) = -\frac{1}{\sqrt N}\sum_{k=1}^N a_{0,k} h_k(t)$ is a sum of $N$ terms, each weighted by an independent (mean-zero, unit-variance, say) random coefficient $a_{0,k}$ that is independent of $h(t)$.
+- Conditional on the trajectory $h(\cdot)$, this is exactly the setting of the (multivariate) Central Limit Theorem: a normalized sum of i.i.d. random weights multiplying fixed (or independently random but $N$-independent-scale) coefficients $h_k(t_1),\dots,h_k(t_n)$.
+- Since $\mathbb{E}[a_{0,k}] = 0$, each $u_0(t_i)$ has mean zero, and by the CLT the joint vector $(u_0(t_1),\dots,u_0(t_n))$ converges in distribution to a multivariate Gaussian.
+- The covariance between two components is $$ \mathbb{E}[u_0(t_i)u_0(t_j)] = \frac{1}{N}\sum_{k,l=1}^N \mathbb{E}[a_{0,k}a_{0,l}],h_k(t_i)h_l(t_j) = \frac{1}{N}\sum_{k=1}^N h_k(t_i)h_k(t_j), $$ using independence ($\mathbb{E}[a_{0,k}a_{0,l}] = \delta_{kl}$). This is exactly $C(t_i,t_j)$ as $N\to\infty$ (assuming this empirical average concentrates/converges, e.g. by a law-of-large-numbers argument over the random features $h_k$).
+
+So the full sentence reads:
+
+> ...the random vector $(u_0(t_1),\dots,u_0(t_n))\in\mathbb{R}^n$ is jointly Gaussian with covariance matrix $\Sigma_{ij} = C(t_i,t_j)$, where $C(t,s) = \lim_{N\to\infty}\frac{1}{N}\sum_{k=1}^N h_k(t)h_k(s) = \lim_{N\to\infty}\frac{1}{N} h(t)^\top h(s)$ is the (deterministic, $N\to\infty$) second-moment kernel of the hidden-unit features.

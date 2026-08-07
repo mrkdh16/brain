@@ -61,7 +61,7 @@ $$
 +
 \begin{bmatrix}j_0(t) \\ \vert \\ j(t) \\ \vert\end{bmatrix}
 $$
-where $a_0\in\mathbb{R}^N$ is the new random vector ($a_{0i}\sim\mathcal{N}(0,1)$) connecting the new site $h_0(t)$ to the rest of the network (we're going to ignore $a_{00}$ for the most part, since it becomes irrelevant as $N$ gets very large). And $\tilde{h}(t)\in\mathbb{R}^N$ describes the trajectory of the original $N$ sites in this new system with an additional $N+1$th site in $h_0(t)$. Note that $\tilde{h}(t)$ will be different from $h(t)$ for any $t>0$ since the entire trajectory of $\tilde{h}(t)$ is affected by the new site $h_0(t)$. The above equation makes it clear that
+where $a_0\in\mathbb{R}^N$ is the new random vector (the $i$th element is a standard Gaussian variable $a_{0i}\sim\mathcal{N}(0,1)$) connecting the new site $h_0(t)$ to the rest of the network (we're going to ignore $a_{00}$ for the most part, since it becomes irrelevant as $N$ gets very large). And $\tilde{h}(t)\in\mathbb{R}^N$ describes the trajectory of the original $N$ sites in this new system with an additional $N+1$th site in $h_0(t)$. Note that $\tilde{h}(t)$ will be different from $h(t)$ for any $t>0$ since the entire trajectory of $\tilde{h}(t)$ is affected by the new site $h_0(t)$. The above equation makes it clear that
 $$
 \frac{d}{dt}\tilde h(t) = -M\tilde h(t)+j(t) - \frac{1}{\sqrt N}h_0(t)a_0.
 $$
@@ -85,7 +85,7 @@ If $j$ is an input to $h$, can we differentiate with respect to it? Of course we
 $$
 \left[\frac{d}{d\varepsilon}h[j+\varepsilon v](t)\right]_{\varepsilon=0}=\int \frac{\delta h(t)}{\delta j(s)}v(s)ds
 $$
-where $v$ is some function in the same function space as $j$ (technically an infinite-dimensional vector). Expanding the left-hand-side by the standard definition of a scalar derivative,
+where $v$ is some function in the same function space as $j$. Expanding the left-hand-side by the standard definition of a scalar derivative,
 $$
 \left[\frac{d}{d\varepsilon}h[j+\varepsilon v](t)\right]_{\varepsilon=0}=\lim_{\varepsilon\to0}\frac{F[j(s)+\varepsilon v(s)](t)-F[j(s)](t)}{\varepsilon}.
 $$
@@ -112,3 +112,7 @@ Plugging our first order Taylor approximation of $\tilde{h}(t)$ into our equatio
 $$
 \frac{d}{dt}h_0(t)\approx \underbrace{-\frac{1}{\sqrt N}a_0^\top h(t)}_{\text{noise term}} + \underbrace{\frac{1}{N}\int_{-\infty}^{t}a_0^\top\frac{\delta h(t')}{\delta j(t')^\top}h_0(t')a_0dt'}_{\text{response term}} + j_0(t) + \text{higher order terms}.
 $$
+The important observation here is that $a_0$ is a random vector with $a_{0i}\sim\mathcal{N}(0,1)$, statistically independent of $h(t)$ (by construction). So, with $\frac{1}{\sqrt{N}}$ scaling, the noise term $u_0(t) := -\frac{1}{\sqrt N}a_0^\top h(t)$ converges to a Gaussian process as $N\to \infty$: $u_0(t)\sim\mathcal{GP}(0,C(t,t))$. This means that for any finite collection of times $\{t_1,\cdots,t_n\}$, the random vector $(u_0(t_1),\cdots,u_0(t_n))\in\mathbb{R}^n$ is jointly Gaussian with covariance matrix $\Sigma_{ij} = C(t_i,t_j)$, where 
+$$
+C(t,t') = \lim_{N\to\infty}\frac{1}{N}\sum_{k=1}^N h_k(t)h_k(t') = \lim_{N\to\infty}\frac{1}{N} h(t)^\top h(t')
+$$ is the (deterministic as $N\to\infty$ by the law of large numbers) second-moment kernel of the hidden-unit features.
