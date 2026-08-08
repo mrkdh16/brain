@@ -197,3 +197,16 @@ $$ C(t,s) ;=; \mathbb{E}\big[u_0(t),u_0(s)\big] ;=; \frac{1}{N},h(t)^\top \mathb
 So the full sentence reads:
 
 > ...the random vector $(u_0(t_1),\dots,u_0(t_n))\in\mathbb{R}^n$ is jointly Gaussian with covariance matrix $\Sigma_{ij} = C(t_i,t_j)$, where $C(t,s) = \lim_{N\to\infty}\frac{1}{N}\sum_{k=1}^N h_k(t)h_k(s) = \lim_{N\to\infty}\frac{1}{N} h(t)^\top h(s)$ is the (deterministic, $N\to\infty$) second-moment kernel of the hidden-unit features.
+
+
+Yes, that's a good and precise way to phrase it — with one small addition to make the statement fully rigorous: it should be _joint_ permutation invariance of $(M, j)$, not each one separately.
+
+**What "statistically invariant under permutation" means precisely.** For any permutation matrix $P$, the pair $(M, j)$ has the same joint distribution as $(P^\top M P,; Pj)$:
+
+$$(M, j) ;\overset{d}{=}; (P^\top M P,; Pj) \quad \text{for all permutations } P.$$
+
+For $M$ alone, this holds automatically for GOE: since $A_{ij}\overset{iid}\sim\mathcal N(0,1)$ for $i\le j$, relabeling indices via $P$ just permutes which i.i.d. Gaussian sits where — the law of the whole matrix is unchanged. For $j(t)$, you need the extra assumption from before (common drive or i.i.d./exchangeable drive across sites) for this same invariance to hold, and critically you need it to hold **jointly with $M$** — i.e., $j$'s randomness (if any) is independent of $M$'s, so permuting both together doesn't introduce any coupling that breaks symmetry.
+
+**Why this is the right formal object, and how it's used.** This joint invariance is exactly the standard notion of _exchangeability_ applied to the collection of "site data" ${(\text{row } k \text{ of } M, j_k)}_{k=1}^N$. It's the formal statement that licenses the argument you're making: since $(M,j)\overset{d}{=}(P^\top MP, Pj)$ for every $P$, the entire dynamical system is invariant under simultaneously relabeling all the sites. So whatever distributional/statistical claim you can derive about site 0 (via the cavity computation) transfers verbatim to site $k$ for any $k$, because there's a permutation carrying site 0 to site $k$ that leaves the whole problem's law unchanged.
+
+So: "statistically invariant under permutation" ≈ "exchangeable," and your sentence is correct as long as it's understood to mean the _joint_ law of $(M,j)$ — not just $M$'s marginal law — is permutation-invariant. That's the precise condition doing the work in "by symmetry, every other site obeys the same self-consistent equation."
