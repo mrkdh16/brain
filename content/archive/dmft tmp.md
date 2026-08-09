@@ -210,3 +210,51 @@ For $M$ alone, this holds automatically for GOE: since $A_{ij}\overset{iid}\sim\
 **Why this is the right formal object, and how it's used.** This joint invariance is exactly the standard notion of _exchangeability_ applied to the collection of "site data" ${(\text{row } k \text{ of } M, j_k)}_{k=1}^N$. It's the formal statement that licenses the argument you're making: since $(M,j)\overset{d}{=}(P^\top MP, Pj)$ for every $P$, the entire dynamical system is invariant under simultaneously relabeling all the sites. So whatever distributional/statistical claim you can derive about site 0 (via the cavity computation) transfers verbatim to site $k$ for any $k$, because there's a permutation carrying site 0 to site $k$ that leaves the whole problem's law unchanged.
 
 So: "statistically invariant under permutation" ≈ "exchangeable," and your sentence is correct as long as it's understood to mean the _joint_ law of $(M,j)$ — not just $M$'s marginal law — is permutation-invariant. That's the precise condition doing the work in "by symmetry, every other site obeys the same self-consistent equation."
+
+Good place to pause — this section packs three separate FT facts together (transform of a derivative, transform of a delta, and the convolution theorem) into one line. Let me unpack each, then show exactly how they combine, and also clean up that last line since it got garbled.
+
+**Convention.** Define the Fourier transform and its inverse as
+
+$$\hat R(\omega) = \int_{-\infty}^\infty e^{-i\omega\tau} R(\tau),d\tau, \qquad R(\tau) = \frac{1}{2\pi}\int_{-\infty}^\infty e^{i\omega\tau}\hat R(\omega),d\omega.$$
+
+**Fact 1: transform of a derivative.** Integrate by parts:
+
+$$\int e^{-i\omega\tau}R'(\tau),d\tau = \big[e^{-i\omega\tau}R(\tau)\big]_{-\infty}^\infty + i\omega\int e^{-i\omega\tau}R(\tau),d\tau = i\omega\hat R(\omega),$$
+
+assuming $R(\tau)\to 0$ as $\tau\to\pm\infty$ (true here, since causality plus decay of $e^{-Mt}$ makes the boundary term vanish). So $\frac{d}{d\tau}R(\tau) ;\longleftrightarrow; i\omega\hat R(\omega)$.
+
+**Fact 2: transform of the delta function.** Trivially, $\int e^{-i\omega\tau}\delta(\tau),d\tau = 1$.
+
+**Fact 3: the convolution theorem — this is the one your garbled last line is trying to prove.** Let $(f_g)(\tau) := \int_{-\infty}^\infty f(\tau-\tau')g(\tau'),d\tau'$. The claim is $\widehat{f_g}(\omega) = \hat f(\omega),\hat g(\omega)$. Here's the derivation, cleanly:
+
+$$ \int_{-\infty}^\infty e^{-i\omega\tau}\left[\int_{-\infty}^\infty f(\tau-\tau')g(\tau'),d\tau'\right]d\tau = \int_{-\infty}^\infty g(\tau')\left[\int_{-\infty}^\infty e^{-i\omega\tau}f(\tau-\tau'),d\tau\right]d\tau'. $$
+
+Substitute $u=\tau-\tau'$ (so $\tau = u+\tau'$, $d\tau=du$) in the inner integral:
+
+$$\int_{-\infty}^\infty e^{-i\omega(u+\tau')}f(u),du = e^{-i\omega\tau'}\int_{-\infty}^\infty e^{-i\omega u}f(u),du = e^{-i\omega\tau'}\hat f(\omega).$$
+
+Plugging back in:
+
+$$\int_{-\infty}^\infty g(\tau'),e^{-i\omega\tau'}\hat f(\omega),d\tau' = \hat f(\omega)\int_{-\infty}^\infty e^{-i\omega\tau'}g(\tau'),d\tau' = \hat f(\omega),\hat g(\omega). \qquad\blacksquare$$
+
+That's exactly the substitution $u=\tau-\tau'$ that the last equation in your text was gesturing at — it's just missing a clean statement of what's being substituted and equated. The key intuition: **convolution in time becomes multiplication in frequency**, because a shift in time ($\tau\to\tau-\tau'$) becomes a pure phase factor $e^{-i\omega\tau'}$ in frequency, and that phase factor is exactly what lets the $\tau'$-integral factor apart from the $u$-integral.
+
+**Applying all three facts to the R-equation.** Take the FT of
+
+$$\frac{d}{d\tau}R(\tau) = \delta(\tau) + \int_{-\infty}^\infty R(\tau-\tau')R(\tau'),d\tau'$$
+
+term by term:
+
+- LHS $\to i\omega\hat R(\omega)$ (Fact 1)
+- $\delta(\tau)\to 1$ (Fact 2)
+- $\int R(\tau-\tau')R(\tau')d\tau' = (R*R)(\tau) \to \hat R(\omega)^2$ (Fact 3, with $f=g=R$)
+
+giving the **purely algebraic equation**
+
+$$i\omega,\hat R(\omega) = 1 + \hat R(\omega)^2.$$
+
+This is the whole point of Fourier-transforming: the integro-differential equation for $R(\tau)$ (derivative _and_ convolution, coupling all times together) becomes an ordinary quadratic equation in $\hat R(\omega)$, solvable pointwise for each frequency $\omega$ independently:
+
+$$\hat R(\omega)^2 - i\omega,\hat R(\omega) + 1 = 0 ;\implies; \hat R(\omega) = \frac{i\omega \pm \sqrt{-\omega^2-4}}{2}.$$
+
+The $\pm$ branch gets fixed by causality — $R(\tau)=0$ for $\tau<0$ constrains $\hat R(\omega)$ to be analytic in the upper half of the complex $\omega$-plane (a Paley–Wiener / Titchmarsh-type argument), which picks out one root. That resolved $\hat R(\omega)$ is then the object that turns into the Stieltjes transform of $M$'s spectral density — which is exactly the route to Wigner's semicircle law, since $R(\tau)$ was defined as $\frac1N\operatorname{Tr},e^{-M\tau}\Theta(\tau)$, i.e. built directly from $M$'s eigenvalues.

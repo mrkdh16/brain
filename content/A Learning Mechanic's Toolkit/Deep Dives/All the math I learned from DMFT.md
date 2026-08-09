@@ -143,7 +143,7 @@ Observe that in the $N\to\infty$ limit (a.k.a. the mean-field limit), the time e
 
 Intuitively, at any given time $t_0$, the noise term $u(t_0)$ is feeding the site $h(t)$ independent signal from all the other sites in the network while the response term is incorporating the effect of the signal emitted by itself during some time $t'<t_0$ which later comes back to affect itself again. The response function $R(t,t')$ determines how much the site's emitted signal at time $t'$ affects the site at some future time $t$.
 ## Solving for the response function
-Because of the linear nature of our system, we can actually exactly solve for the response function $R(t,t')$. Let's do that right now. Doing so will naturally lead us to the semicircle law.
+Because of the linear nature of our system, we can exactly solve for the response function $R(t,t')$ (it is more often the case that we cannot analytically solve for $R(t,t')$; e.g., with neural networks). Let's do that right now. Doing so will naturally lead us to the semicircle law.
 
 Stacking scalar equations, we get the following vector equation:
 $$
@@ -155,7 +155,7 @@ $$
 $$
 Then, recalling that $R(t,s) = \frac{1}{N}\text{Tr}\frac{\delta \mathbf{h}(t)}{\delta \mathbf{j}(s)^\top}$, we take the trace of both sides and multiply by $\frac{1}{N}$ to get an equation of only $R$'s:
 $$
-\frac{d}{dt}R(t,s)= \delta(t-s)+ \int_{-\infty}^t R(t,t')R(t,s)dt'.
+\frac{d}{dt}R(t,s)= \delta(t-s)+ \int_{-\infty}^t R(t,t')R(t',s)dt'.
 $$
 Now, recall that we actually solved for $\frac{\delta h_i(t)}{\delta j_k(s)}$ earlier:
 $$
@@ -163,5 +163,41 @@ $$
 $$
 This implies that 
 $$
-R(t,s) = \frac{1}{N}\text{Tr}\frac{\delta \mathbf{h}(t)}{\delta \mathbf{j}(s)^\top} = \frac{1}{N} \text{Tr} (e^{-M(t-s)}) \Theta(t-s)
+R(t,s) = \frac{1}{N}\text{Tr}\frac{\delta \mathbf{h}(t)}{\delta \mathbf{j}(s)^\top} = \frac{1}{N} \text{Tr} (e^{-M(t-s)}) \Theta(t-s).
 $$
+An important observation we can make about $R(t,s)$ is that it's time-translation invariant (TTI), i.e., the function value of $R$ only depends on the difference $t-s=: \tau$: 
+$$
+R(\tau) = \frac{1}{N}\text{Tr} (e^{-M\tau}) \Theta(\tau).
+$$
+Rewriting our equation of $R$'s from earlier,
+$$
+\frac{d}{d\tau}R(\tau) = \delta(\tau) + \int_{-\infty}^\infty R(\tau-\tau')R(\tau')d\tau',
+$$
+where the causality-enforcing $\Theta(\tau)$ allows us to play fast and loose with the upper limit of the integral. Rewritten like this, it becomes clear that the integral term is a convolution. Consequently, the convolution theorem motivates us to solve the equation in the frequency domain through a Fourier transform. 
+### Fourier transforming
+Define the Fourier transform and inverse Fourier transform as follows:
+$$
+\hat R(\omega) = \int_{-\infty}^\infty e^{-i\omega\tau} R(\tau)d\tau, \quad R(\tau) = \frac{1}{2\pi}\int_{-\infty}^\infty e^{i\omega\tau}\hat R(\omega)d\omega.
+$$
+Intuitively, the $e^{i\omega\tau}$'s are pure frequency wave functions and the Fourier transform is performing an inner product to see how much the function $R(\tau)$ lies in the frequency $\omega$. Applying the Fourier transform to the left-hand-side,
+$$
+\int^\infty_{-\infty} e^{-i\omega\tau}\frac{dR(\tau)}{d\tau}d\tau = \big[e^{-i\omega\tau}R(\tau)\big]_{-\infty}^\infty + i\omega\int e^{-i\omega\tau}R(\tau)d\tau = i\omega\hat R(\omega),
+$$
+by integration by parts. The Fourier transform of the delta function $\delta(\tau)$ is simply 1. Applying the Fourier transform to the convolution,
+$$
+\int^\infty_{-\infty} e^{-i\omega\tau}\Big[\int_{-\infty}^\infty R(\tau-\tau')R(\tau')d\tau'\Big]d\tau
+= \int^\infty_{-\infty} R(\tau')d\tau'\int^\infty_{-\infty} e^{i\omega\tau}R(\tau-\tau')d\tau,
+$$
+and some algebra reveals a simple expression in the frequency domain:
+$$
+\int^\infty_{-\infty} e^{-i\omega \tau'}R(\tau')d\tau' \int^\infty_{-\infty} e^{-i\omega(\tau-\tau')}R(\tau-\tau')d\tau = \hat{R}(\omega)^2.
+$$
+Thus, in the frequency domain, we get the following simple equation:
+$$
+i\omega\hat{R}(\omega)=1+\hat{R}(\omega)^2.
+$$
+The quadratic formula reveals that
+$$
+\hat{R}(\omega) = \frac{i\omega\pm\sqrt{(i\omega)^2-4}}{2}.
+$$
+### Random matrix theorying
