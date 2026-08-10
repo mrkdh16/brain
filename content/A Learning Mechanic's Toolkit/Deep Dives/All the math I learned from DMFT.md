@@ -201,3 +201,25 @@ $$
 \hat{R}(\omega) = \frac{i\omega\pm\sqrt{(i\omega)^2-4}}{2}.
 $$
 ### Random matrix theorying
+To extract statistical information about the matrix $M$ from the above expression for $\hat{R}(\omega)$, we must first recognize that there exists a concrete connection between the time domain response function $R(\tau)$ and the *eigenvalue density* $\rho(\lambda) = \frac{1}{N}\sum^N_{i=1}\delta(\lambda-\lambda_i)$---$\rho(\lambda)$ has spikes at the eigenvalues of $M$ and integrates to 1. Recall that $R(\tau) = \frac{1}{N}\text{Tr} (e^{-M\tau}) \Theta(\tau).$ Since the trace of a matrix is equal to the sum of its eigenvalues,
+$$
+\frac{1}{N}\text{Tr} (e^{-M\tau}) \Theta(\tau)=\frac{1}{N}\sum^N_{i=1}e^{-\lambda_i\tau}\Theta(\tau).
+$$
+Turning the discrete summation into an integral using $\rho(\lambda)$,
+$$
+\frac{1}{N}\sum^N_{i=1}e^{-\lambda_i\tau}\Theta(\tau) = \int^\infty_{-\infty} \rho(\lambda)e^{-\lambda\tau}\Theta(\tau)d\lambda = R(\tau).
+$$
+Now Fourier transforming back to the frequency domain, 
+$$
+\int_{-\infty}^\infty e^{-i\omega\tau}\left [ \int^\infty_{-\infty} \rho(\lambda)e^{-\lambda\tau}\Theta(\tau)d\lambda\right ] d\tau 
+= \int^\infty_{-\infty}\rho(\lambda)\left [ \int^\infty_{-\infty}e^{-(i\omega+\lambda)\tau}\Theta(\tau) d\tau\right ] d\lambda.
+$$
+Integrating the inner integral, we obtain an expression explicitly connecting $\hat{R}(\omega)$ with the eigenvalues of $M$:
+$$
+\hat{R}(\omega)=\int^\infty_{-\infty}\frac{\rho(\lambda)}{i\omega+\lambda}d\lambda.
+$$
+Now, to obtain an expression for $\rho(\lambda)$ in terms of $\hat{R}(\omega)$, we will use a tool called the Sokhotski–Plemelj formula:
+$$
+\rho(\lambda) = \lim_{\varepsilon\to0}\frac{1}{\pi}
+$$
+I'm going to opt to black-box this formula. 

@@ -1,5 +1,5 @@
 ---
-title: "Deep Linear Networks: A deep dive into Saxe et al. and the role of depth in learning"
+title: A deep dive into the ultimate toy model; deep linear networks
 draft: false
 tags:
   - computer-science
@@ -15,7 +15,7 @@ tags:
 
 An interactive, albeit more concise, version of this blog post is hosted at [learningmechanics.pub](https://learningmechanics.pub/).
 ## Introduction.
-Understanding deep learning is a *very* hard problem. Despite the rapid increase in AI capabilities, we have yet to create a cohesive mathematical framework that explains *what* and *how* these powerful models learn. When tackling a problem this monumental—specifically, the task of erecting a rigorous mathematical framework that describes a ridiculously complex system—it helps to think like a physicist. Likely, a physicist's first instinct would be to [[On Learning Mechanics|conjure up a toy model]]. By studying a simplified system that still exhibits the complex, non-trivial phenomena of the original, we can find mathematically solid ground.
+Understanding deep learning is a *very* hard problem. Despite the rapid increase in AI capabilities, we have yet to create a cohesive mathematical framework that explains *what* and *how* these powerful models learn. When tackling a problem this monumental—specifically, the task of erecting a rigorous mathematical framework that describes a ridiculously complex system—it helps to think like a physicist. Likely, a physicist's first instinct would be to conjure up a toy model. By studying a simplified system that still exhibits the complex, non-trivial phenomena of the original, we can find mathematically solid ground.
 
 At first glance, deep linear networks seem quite uninteresting. Indeed, no expressiveness is gained from adding layers in linear networks as the input-output map can always be rewritten as a single shallow layer:
 $$
