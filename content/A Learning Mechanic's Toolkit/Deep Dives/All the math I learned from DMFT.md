@@ -141,7 +141,7 @@ Observe that in the $N\to\infty$ limit (a.k.a. the mean-field limit), the time e
 <img src="Screenshot 2026-08-07 at 3.10.38 PM.png" width="650">
 </center>
 
-Intuitively, at any given time $t_0$, the noise term $u(t_0)$ is feeding the site $h(t)$ independent signal from all the other sites in the network while the response term is incorporating the effect of the signal emitted by itself during some time $t'<t_0$ which later comes back to affect itself again. The response function $R(t,t')$ determines how much the site's emitted signal at time $t'$ affects the site at some future time $t$.
+Intuitively, at any given time $t_0$, the noise term $u(t_0)$ is feeding the site $h(t)$ signal from all the other sites in the network. Because every other site is statistically indistinguishable from $h(t)$, the noise is *colored* by the statistics of $h(t)$. The response term is like a *memory*, incorporating the effect of the signal emitted by itself during some past time $t'<t_0$ which later comes back to affect itself again. The response function $R(t,t')$ determines how much the site's past state affects the site at some future time $t$.
 ## Solving for the response function
 Because of the linear nature of our system, we can exactly solve for the response function $R(t,t')$ (it is more often the case that we cannot analytically solve for $R(t,t')$; e.g., with neural networks). Let's do that right now. Doing so will naturally lead us to the semicircle law.
 
@@ -220,6 +220,10 @@ $$
 $$
 Now, to obtain an expression for $\rho(\lambda)$ in terms of $\hat{R}(\omega)$, we will use a tool called the Sokhotski–Plemelj formula:
 $$
-\rho(\lambda) = \lim_{\varepsilon\to0}\frac{1}{\pi}
+\rho(\lambda) = \lim_{\varepsilon\to0}\frac{1}{\pi}\text{Im}[\hat{R}(i\lambda-\varepsilon)]
 $$
-I'm going to opt to black-box this formula. 
+Plugging in the quadratic formula expression we got for $\hat{R}(\lambda)$ from earlier, we get our final expression for the eigenvalue density of $M$:
+$$
+\rho(\lambda)=\frac{1}{2\pi}\sqrt{[4-\lambda^2]_+}
+$$
+for $\lambda\in[-2,2]$. This is Wigner's famous semicircle law!

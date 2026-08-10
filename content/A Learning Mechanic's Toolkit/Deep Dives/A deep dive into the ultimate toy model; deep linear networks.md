@@ -10,7 +10,7 @@ tags:
   - learning-mechanics
 ---
 <center>
-<img src="Screenshot 2026-02-14 at 12.23.24 AM.png" width="600">
+<img src="Scmreenshot 2026-02-14 at 12.23.24 AM.png" width="600">
 </center>
 
 An interactive, albeit more concise, version of this blog post is hosted at [learningmechanics.pub](https://learningmechanics.pub/).
