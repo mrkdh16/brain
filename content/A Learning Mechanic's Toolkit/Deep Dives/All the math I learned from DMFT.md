@@ -112,8 +112,9 @@ $$
 $$
 The important observation here is that $\mathbf{a}_0$ is a random vector with $a_{0i}\sim\mathcal{N}(0,1)$, statistically independent of $\mathbf{h}(t)$ (by construction). The noise term $u_0(t) := -\frac{1}{\sqrt N}\mathbf{a}_0^\top \mathbf{h}(t)$ has $\frac{1}{\sqrt{N}}$ scaling. Thus, by a CLT argument, it converges to a Gaussian process as $N\to \infty$: $u_0(t)\sim GP(0,C(t,t))$. This means that for any finite collection of times $\{t_1,\cdots,t_n\}$, the random vector $(u_0(t_1),\cdots,u_0(t_n))\in\mathbb{R}^n$ is jointly Gaussian with covariance matrix $\Sigma_{ij} = C(t_i,t_j)$, where 
 $$
-C(t,t') = \frac{1}{N}\sum_{k=1}^N h_k(t)h_k(t')
-$$is the second-moment kernel of the hidden-unit features. The response term on the other hand, has $\frac{1}{N}$ scaling. The quadratic form in the response term can be decomposed as follows:
+C(t,t') = \frac{1}{N} \sum^N_{k=1} h_k(t)h_k(t')
+$$
+is the second-moment kernel of the hidden-unit features. The response term on the other hand, has $\frac{1}{N}$ scaling. The quadratic form in the response term can be decomposed as follows:
 $$
 \frac{1}{N}\mathbf{a}^\top_0\frac{\delta \mathbf{h}(t)}{\delta \mathbf{j}(t')^\top}\mathbf{a}_0 = \frac{1}{N}\sum^N_{i=1}(a_{0i})^2 \left(\frac{\delta \mathbf{h}(t)}{\delta \mathbf{j}(t')^\top}\right)_{ii}+\frac{1}{N}\sum_{1\leq i\neq j\leq N} a_{0i}\left(\frac{\delta \mathbf{h}(t)}{\delta \mathbf{j}(t')^\top}\right)_{ij}a_{0j}.
 $$
