@@ -77,7 +77,7 @@ A functional $F$ takes as input a function $\mathbf{j}(t)$ and returns a scalar:
 $$
 \mathbf{h}(t)= e^{-Mt}\mathbf{h}(0)+\int_{0}^{\infty} e^{-M(t-t')}\mathbf{j}(t')\Theta(t-t')dt'.
 $$
-Clearly the function $\mathbf{h}(t)$ depends on the value of $\mathbf{j}(t')$ for all $t'\in \mathbb{R}^+$ (technically the Heaviside function means that the dependence isn't this strict, but whatever). 
+Clearly the function $\mathbf{h}(t)$ depends on the value of $\mathbf{j}(t')$ for all $t'\in \mathbb{R}^+$ (technically the Heaviside function means that the dependence isn't this strict, but whatever).
 
 If $\mathbf{j}$ is an input to $\mathbf{h}$, can we differentiate with respect to it? Of course we can! The functional derivative $\frac{\delta \mathbf{h}(t)}{\delta \mathbf{j}(s)}$ is defined as the function that satisfies:
 $$
