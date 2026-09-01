@@ -11,9 +11,11 @@ Finding unchanging, static, permanent things in our world is incredibly hard. Tr
 - humans have been trying to cast dynamical phenomena in a static light for centuries
 	- ex) platonic forms
 	- our minds have often struggle to grasp the vast lineage of events that conspire to create something new (invisible, latent processes are hard to think about)
-		- for chaotic systems with an absurdly strong causal relationship between initial conditions and dynamical trajectories, we will likely never be able to "understand" them fully due to the vast number of initial conditions that need to be tracked or for some other reason
+		- chaotic system
+		- there may be an innumerable amount of initial conditions/latent factors that influence an outcome
 	- humans are obsessed with permanence: legacy, stability, everlasting achievements are often what humans spend the majority of their life chasing
 		- perhaps there's something fundamental about life chasing permanence in an impermanent world
+		- by far the most successful enterprise in creating permanence has been mathematics
 - the universality of transience in our world is why the invention of calculus was such a huge leap forward in our understanding of the universe; it's the language for describing change (likewise for evolution)
 - applying this thinking to the study of deep learning, this is exactly the rationale for studying training dynamics: features and representations will only make sense in the light of the dynamics that gave rise to them
 	- in such a dynamical, transient world (philosophically speaking) it's no surprise that the first technology to exhibit something resembling human intelligence is a result of such a complex dynamical process
